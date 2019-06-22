@@ -1,76 +1,76 @@
-# scraper_news
+Part 1 (Connection)
+    Step 1 Create and test localhost port
+        <!-- // 
+    var port = process.env.PORT || 3000;
+    app.listen(port, function() {
+    console.log("Listening on PORT " + port);
+    }); -->
+    Step 2 Setup connection to MongoDB
+    <!-- /
+    mongoose.connect("mongodb://localhost/scraped_news");
+    // const MONGODB_URI =
+    //   process.env.MONGODB_URI || "mongodb://localhost/scraper_news";
+    // mongoose.connect(MONGODB_URI, { useNewUrlParser: true }); -->
 
-All the News That's Fit to Scrape
+    Step 3 start mongod
+    Step 4 test connection to mongo server
 
-Overview
-In this assignment, you'll create a web app that lets users view and leave comments on the latest news. But you're not going to actually write any articles; instead, you'll flex your Mongoose and Cheerio muscles to scrape news from another site.
+Part 2 (Models)
+    Step 1 create/setup models
+        a. articlemodel 
+            create schema for articlemodel
+            
 
-Here is link to demo of working app: https://boiling-brook-85767.herokuapp.com/articles
-To run type in : node server
-To clear and reset the database: https://boiling-brook-85767.herokuapp.com/clearall
-Video series on process of making the app: https://www.youtube.com/playlist?list=PLkOpMJMP5av2xJK_p2YTdcVtBSU6vDi8F
+                    <!-- 
+                        var mongoose = require("mongoose");
+                        var Schema = mongoose.Schema;
+                    var ArticleSchema = new Schema({
+                    title: {
+                        type: String,
+                        required: true
+                    },
+                    link: {
+                        type: String,
+                        required: true
+                    },
+                    comment: [
+                        {
+                        type: Schema.Types.ObjectId,
+                        ref: "Comment"
+                        }
+                    ]
+                    });
+                    var Article = mongoose.model("Article", ArticleSchema);
+                    module.exports = Article; -->
+        b. commentmodel
+            create schema for commentmodel
+                    <!-- var mongoose = require("mongoose");
 
-All specs of the project were met as described in the instructions below.
+                    var Schema = mongoose.Schema;
+                    
+                    var CommentSchema = new Schema({
+                    name: {
+                        type: String
+                    },
+                    body: {
+                        type: String,
+                        required: true
+                    }
+                    });
+                    var Comment = mongoose.model("Comment", CommentSchema);
+                    module.exports = Comment; -->
 
-INSTRUCTIONS
-
-Create a GitHub repo for this assignment and clone it to your computer. Any name will do -- just make sure it's related to this project in some fashion.
-
-Run npm init. When that's finished, install and save these npm packages:
-
-express
-
-express-handlebars
-
-mongoose
-
-cheerio
-
-axios
-
-NOTE: If you want to earn complete credit for your work, you must use all five of these packages in your assignment.
-
-In order to deploy your project to Heroku, you must set up an mLab provision. mLab is remote MongoDB database that Heroku supports natively. Follow these steps to get it running:
-
-Create a Heroku app in your project directory.
-
-Run this command in your Terminal/Bash window:
-
-heroku addons:create mongolab
-
-This command will add the free mLab provision to your project.
-
-When you go to connect your mongo database to mongoose, do so the following way:
-
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
-mongoose.connect(MONGODB_URI);
-
-This code should connect mongoose to your remote mongolab database if deployed, but otherwise will connect to the local mongoHeadlines database on your computer.
-
-Watch this demo of a possible submission. See the deployed demo application here.
-
-Your site doesn't need to match the demo's style, but feel free to attempt something similar if you'd like. Otherwise, just be creative!
-
-Submission on BCS
-
-This assignment must be deployed. \* Please submit both the deployed Heroku link to your homework AND the link to the Github Repository!
-
-Instructions
-
-Create an app that accomplishes the following:
-
-Whenever a user visits your site, the app should scrape stories from a news outlet of your choice and display them for the user. Each scraped article should be saved to your application database. At a minimum, the app should scrape and display the following information for each article:
-
-Headline - the title of the article
-
-Summary - a short summary of the article
-
-URL - the url to the original article
-
-Feel free to add more content to your database (photos, bylines, and so on).
-
-Users should also be able to leave comments on the articles displayed and revisit them later. The comments should be saved to the database as well and associated with their articles. Users should also be able to delete comments left on articles. All stored comments should be visible to every user.
-
-Beyond these requirements, be creative and have fun with this!
+Part 3 (Handlebars)frontend
+    views-folder
+        a.indexHandlebars-file
+        b.--articleHandlerbars-file
+        c.partialsfolder
+            1.navfolder
+                navbar-file(branding area)
+            2.footer-file
+        d.layouts-folder
+            1.main.Handlebars(head, html, scripts.)
+            
+Part 4 Controller - This part is not fully working yet
+        a.connection to models
+        b.setup routes
